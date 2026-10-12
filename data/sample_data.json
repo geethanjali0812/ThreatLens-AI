@@ -1,76 +1,70 @@
-
 {
-  "brands": [
-    {
-      "brand_name": "NovaKart",
-      "website": "https://novakart.example",
-      "logo_url": "",
-      "social_accounts": {
-        "instagram": "@novakart_official",
-        "facebook": "https://facebook.com/novakart.demo",
-        "linkedin": "https://linkedin.com/company/novakart-demo",
-        "other": ""
-      },
-      "official_app": {
-        "name": "NovaKart Shopping",
-        "developer": "NovaKart Technologies",
-        "description": ""
-      }
-    },
-    {
-      "brand_name": "ShopSwift",
-      "website": "https://shopswift.example",
-      "logo_url": "",
-      "social_accounts": {
-        "instagram": "@shopswift_official",
-        "facebook": "https://facebook.com/shopswift.demo",
-        "linkedin": "https://linkedin.com/company/shopswift-demo",
-        "other": ""
-      },
-      "official_app": {
-        "name": "ShopSwift Shopping",
-        "developer": "ShopSwift Technologies",
-        "description": "Shop products online, compare prices, explore new arrivals, track orders, and manage your shopping account securely."
-      }
-    }
-  ],
-  "brand_profile": {
-    "brand_name": "ThreatLens",
-    "website": "https://threatlens.example",
-    "logo_url": "",
-    "social_accounts": {
-      "instagram": "",
-      "facebook": "",
-      "linkedin": "",
-      "other": ""
-    },
-    "official_app": {
-      "name": "ThreatLens AI",
-      "developer": "ThreatLens Labs",
-      "description": "The official ThreatLens security app."
-    }
-  },
-  "app_listings": [
-    {
-      "name": "ThreatLens AI",
-      "developer": "ThreatLens Labs",
-      "description": "The official ThreatLens security app.",
-      "store": "Sample data",
-      "url": ""
-    },
-    {
-      "name": "ThreatLens Security",
-      "developer": "Unknown Developer",
-      "description": "Protect your ThreatLens account.",
-      "store": "Sample data",
-      "url": ""
-    },
-    {
-      "name": "Weather Today",
-      "developer": "Example Apps",
-      "description": "A local weather forecast app.",
-      "store": "Sample data",
-      "url": ""
-    }
-  ]
+    "brands": [
+        {
+            "brand_name": "NovaKart",
+            "website": "https://novakart.example",
+            "logo_url": "",
+            "social_accounts": {
+                "instagram": "@novakart_official",
+                "facebook": "https://facebook.com/novakart.demo",
+                "linkedin": "https://linkedin.com/company/novakart-demo",
+                "other": ""
+            },
+            "official_app": {
+                "name": "NovaKart Shopping",
+                "developer": "NovaKart Technologies",
+                "description": ""
+            }
+        },
+        {
+            "brand_name": "ShopSwift",
+            "website": "https://shopswift.example",
+            "logo_url": "",
+            "social_accounts": {
+                "instagram": "@shopswift_official",
+                "facebook": "https://facebook.com/shopswift.demo",
+                "linkedin": "https://linkedin.com/company/shopswift-demo",
+                "other": ""
+            },
+            "official_app": {
+                "name": "ShopSwift Shopping",
+                "developer": "ShopSwift Technologies",
+                "description": "Shop products online, compare prices, explore new arrivals, track orders, and manage your shopping account securely."
+            }
+        },
+        {
+            "brand_name": "SecureGuard",
+            "website": "https://www.secureguard.example",
+            "logo_url": "",
+            "logo_filename": "8f7cc344-f60b-45e1-abb4-a4a5e4b77068_secureguard_logo.png",
+            "social_accounts": {
+                "instagram": "@secureguard_official",
+                "facebook": "https://facebook.com/secureguard",
+                "linkedin": "https://linkedin.com/company/secureguard",
+                "other": ""
+            },
+            "official_app": {
+                "name": "SecureGuard",
+                "developer": "SecureGuard Technologies",
+                "description": "A smart security app to protect your device and data from threats"
+            }
+        },
+        {
+            "brand_name": "Nike",
+            "website": "nike.com",
+            "logo_url": "",
+            "logo_filename": "",
+            "social_accounts": {
+                "instagram": "instagram.com/nike",
+                "facebook": "facebook.com/nike",
+                "linkedin": "linkedin.com/company/nike",
+                "other": ""
+            },
+            "official_app": {
+                "name": "Nike: Sport & Fashion App",
+                "developer": "NIKE,Inc.",
+                "description": ""
+            }
+        }
+    ]
 }

@@ -10,6 +10,11 @@ if "profiles_reviewed" not in st.session_state:
     st.session_state.profiles_reviewed = 0
 if "apps_reviewed" not in st.session_state:
     st.session_state.apps_reviewed = 0
+if "app_scan_results" not in st.session_state:
+    st.session_state.app_scan_results = []
+
+if "social_scan_results" not in st.session_state:
+    st.session_state.social_scan_results = []
 st.set_page_config(
     page_title="ThreatLens AI",
     page_icon="🛡️",
@@ -102,12 +107,25 @@ elif page == "Social Media Monitoring":
             format_func=lambda brand: brand["brand_name"]
         )
 
+        brand_name = brand_profile["brand_name"]
+        brand_key = "".join(
+            character.lower()
+            for character in brand_name
+            if character.isalnum()
+        )
+
         sample_profiles = [
             {
-                "name": brand_profile["brand_name"],
-                "username": "@novakart_fake",
+                "name": brand_name,
+                "username": "@" + brand_key + "official1",
                 "platform": "Instagram",
-                "url": "https://example.com/fake"
+                "url": "https://example.com/" + brand_key + "official1"
+            },
+            {
+                "name": brand_name + " Customer Support",
+                "username": "@" + brand_key + "_help",
+                "platform": "Instagram",
+                "url": "https://example.com/" + brand_key + "_help"
             },
             {
                 "name": "Random Store",
@@ -116,6 +134,7 @@ elif page == "Social Media Monitoring":
                 "url": "https://example.com/random"
             }
         ]
+        
 
        
         if st.button("Scan Sample Profiles"):
@@ -124,7 +143,7 @@ elif page == "Social Media Monitoring":
             findings = monitor_social_profiles(
                 brand_profile, sample_profiles
             )
-
+            st.session_state.social_scan_results = findings
 
             st.subheader("Monitoring Results")
             st.write("Sample profiles reviewed:", len(sample_profiles))
@@ -134,7 +153,16 @@ elif page == "Social Media Monitoring":
                     st.write("---")
                     st.write("**Name:**", profile["name"])
                     st.write("**Username:**", profile["username"])
-                    st.write("**Platform:**", profile["platform"])
+
+                    st.write(
+                        "**Name similarity:**",
+                        str(profile.get("name_similarity", 0)) + "%"
+                    )
+
+                    st.write(
+                        "**Username similarity:**",
+                        str(profile.get("username_similarity", 0)) + "%"
+                    )
                     st.write(
                         "**Risk score:**",
                         str(profile["risk_score"]) + "/100"
@@ -157,6 +185,7 @@ elif page == "Social Media Monitoring":
 
 
 
+
 elif page == "App Store Monitoring":
     st.header("App Store Monitoring")
 
@@ -165,7 +194,12 @@ elif page == "App Store Monitoring":
     if not brands:
         st.info("Register a brand profile first.")
     else:
-        brand_profile = brands[0]
+        brand_profile = st.selectbox(
+            "Choose a registered brand",
+            brands,
+            format_func=lambda brand: brand["brand_name"]
+        )
+
         official_app = brand_profile.get("official_app", {})
 
         app_listings = [
@@ -190,6 +224,24 @@ elif page == "App Store Monitoring":
 
             findings = monitor_apps(brand_profile, app_listings)
 
+            existing = st.session_state.app_scan_results
+
+            for item in findings:
+                item = dict(item)
+                item["brand_checked"] = brand_profile["brand_name"]
+
+                existing = [
+                    old for old in existing
+                    if not (
+                        old.get("brand_checked") == item["brand_checked"]
+                        and old.get("name") == item.get("name")
+                    )
+                ]
+
+                existing.append(item)
+
+            st.session_state.app_scan_results = existing
+
             if findings:
                 st.write("### Potentially suspicious apps")
 
@@ -198,59 +250,85 @@ elif page == "App Store Monitoring":
                         f"**{app.get('name', 'Unknown app')}** — "
                         f"risk score: {app.get('risk_score', 0)}/100"
                     )
-                    st.write("Risk level: " + app.get("risk_level", "Unknown"))
-                    st.write("Reasons: " + ", ".join(app.get("reasons", [])))
+                    st.write(
+                        "Risk level: " + app.get("risk_level", "Unknown")
+                    )
+                    st.write(
+                        "Reasons: " + ", ".join(app.get("reasons", []))
+                    )
             else:
-                st.success("No suspicious apps found in the current sample listings.")
-
+                st.success(
+                    "No suspicious apps found in the current sample listings."
+                )
 
 
 
 elif page == "Risk Reports":
     st.header("Risk Reports")
-    st.write("Generate and download a sample report.")
+    st.write("Generate a report from the latest scan results.")
 
-    sample_results = [
-        {
-            "name": "NovaKart Shopping",
-            "risk_score": 85,
-            "risk_level": "High",
-            "reasons": ["High name similarity"]
-        },
-        {
-            "name": "Safe Example App",
-            "risk_score": 10,
-            "risk_level": "Low",
-            "reasons": ["No strong risk indicators found"]
-        }
-    ]
+    if "app_scan_results" not in st.session_state:
+        st.session_state.app_scan_results = []
 
-    if st.button("Generate Sample Report"):
-        report_data = generate_report(sample_results)
+    if "social_scan_results" not in st.session_state:
+        st.session_state.social_scan_results = []
 
-        st.success("Sample report generated!")
+    app_results = st.session_state.app_scan_results
+    social_results = st.session_state.social_scan_results
 
-        col1, col2 = st.columns(2)
-        col1.metric(
-            "Items Scanned",
-            report_data["total_items_scanned"]
+    all_results = []
+
+    for item in app_results:
+        result = dict(item)
+        result["scan_type"] = "Mobile App"
+        all_results.append(result)
+
+    for item in social_results:
+        result = dict(item)
+        result["scan_type"] = "Social Profile"
+        all_results.append(result)
+
+    if not all_results:
+        st.info(
+            "No scan results available yet. "
+            "Run a scan in Social Media Monitoring or "
+            "App Store Monitoring first."
         )
-        col2.metric(
-            "Items Flagged",
-            report_data["flagged_items"]
-        )
-
-        st.json(report_data)
-
-        report_json = json.dumps(
-            report_data,
-            indent=4,
-            ensure_ascii=False
+    else:
+        flagged_count = sum(
+            1 for item in all_results
+            if item.get("risk_level") in ("Medium", "High")
         )
 
-        st.download_button(
-            label="Download JSON Report",
-            data=report_json,
-            file_name="threat_report.json",
-            mime="application/json"
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Items Scanned", len(all_results))
+        col2.metric("Items Flagged", flagged_count)
+        col3.metric(
+            "Low Risk",
+            sum(
+                1 for item in all_results
+                if item.get("risk_level") == "Low"
+            )
         )
+
+        st.subheader("Scan Results")
+        st.dataframe(all_results, use_container_width=True)
+
+        if st.button("Generate Report"):
+            report_data = generate_report(all_results)
+
+            st.success("Report generated successfully!")
+            st.json(report_data)
+
+            report_json = json.dumps(
+                report_data,
+                indent=4,
+                ensure_ascii=False
+            )
+
+            st.download_button(
+                label="Download JSON Report",
+                data=report_json,
+                file_name="threatlens_risk_report.json",
+                mime="application/json"
+            )
