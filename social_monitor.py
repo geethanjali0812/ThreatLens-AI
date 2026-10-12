@@ -82,6 +82,7 @@ def monitor_social_profiles(brand_profile, profiles):
             if normalized_brand and normalized_username else 0
         )
 
+
         score = 0
         reasons = []
 
@@ -111,17 +112,23 @@ def monitor_social_profiles(brand_profile, profiles):
             str(username).lower() + " " + str(name).lower()
         )
 
-        if any(term in combined_text for term in extra_terms):
-            score += 10
+        matched_terms = [
+            term for term in extra_terms
+            if term in combined_text
+        ]
+
+        if matched_terms:
+            score += 20
             reasons.append(
-                "Contains a support or verification-related term"
+                "Contains support or verification-related terms: "
+                + ", ".join(matched_terms)
             )
 
         score = min(score, 100)
 
-        if score >= 70:
+        if score >= 60:
             risk_level = "High"
-        elif score >= 30:
+        elif score >= 25:
             risk_level = "Medium"
         else:
             risk_level = "Low"
