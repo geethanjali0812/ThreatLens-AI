@@ -21,6 +21,186 @@ st.set_page_config(
     layout="wide"
 )
 
+st.markdown("""
+<style>
+/* Main application background */
+.stApp {
+    background-color: #0b1120;
+    color: #e2e8f0;
+}
+
+/* Main headings */
+h1, h2, h3 {
+    color: #38bdf8;
+}
+
+/* Sidebar */
+[data-testid="stSidebar"] {
+    background-color: #111827;
+}
+
+/* Metric cards */
+[data-testid="stMetric"] {
+    background-color: #172033;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid #263449;
+}
+
+/* Buttons */
+.stButton > button {
+    background-color: #0284c7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-weight: 600;
+}
+
+/* Button hover */
+.stButton > button:hover {
+    background-color: #0369a1;
+    color: white;
+    border: 1px solid #38bdf8;
+}
+
+/* Input fields */
+.stTextInput input,
+.stTextArea textarea {
+    background-color: #172033;
+    color: #38bdf8;
+    border-radius: 8px;
+}
+
+/* Divider */
+hr {
+    border-color: #263449;
+}
+
+/* Choose a module label */
+[data-testid="stSidebar"] div[data-testid="stRadio"] > label {
+    color: #38bdf8 !important;
+    font-weight: 600 !important;
+}
+
+/* Navigation option text */
+[data-testid="stSidebar"] div[role="radiogroup"] label,
+[data-testid="stSidebar"] div[role="radiogroup"] label p,
+[data-testid="stSidebar"] div[role="radiogroup"] label span {
+    color: #e2e8f0 !important;
+}
+
+/* Radio button accent color */
+[data-testid="stSidebar"] div[role="radiogroup"] input {
+    accent-color: #38bdf8;
+}
+
+/* Sidebar navigation text */
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] span,
+[data-testid="stSidebar"] div[data-testid="stMarkdownContainer"] {
+    color: #ffffff !important;
+}
+
+/* Navigation heading */
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3 {
+    color: #ffffff !important;
+}
+
+/* Sidebar radio options */
+[data-testid="stSidebar"] [role="radiogroup"] label,
+[data-testid="stSidebar"] [role="radiogroup"] label p,
+[data-testid="stSidebar"] [role="radiogroup"] label span {
+    color: #ffffff !important;
+}
+
+/* Sidebar select box text */
+[data-testid="stSidebar"] [data-baseweb="select"] div {
+    color: #ffffff;
+}
+
+/* Force all sidebar text to white */
+[data-testid="stSidebar"],
+[data-testid="stSidebar"] * {
+    color: #ffffff !important;
+}
+
+/* Keep radio button circles visible */
+[data-testid="stSidebar"] [role="radio"] > div:first-child {
+    border-color: #ffffff !important;
+}
+
+/* Highlight selected navigation option */
+[data-testid="stSidebar"] [role="radio"][aria-checked="true"] p,
+[data-testid="stSidebar"] [role="radio"][aria-checked="true"] span {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+}
+
+/* Sidebar background */
+[data-testid="stSidebar"] {
+    background-color: #111827 !important;
+}
+
+/* Brand Profile form labels */
+[data-testid="stAppViewContainer"] label,
+[data-testid="stAppViewContainer"] .stTextInput label,
+[data-testid="stAppViewContainer"] .stTextArea label,
+[data-testid="stAppViewContainer"] .stFileUploader label,
+[data-testid="stAppViewContainer"] .stSelectbox label {
+    color: #ffffff !important;
+}
+
+/* Input fields: typed text and placeholders */
+[data-testid="stAppViewContainer"] input,
+[data-testid="stAppViewContainer"] textarea {
+    color: #ffffff !important;
+    background-color: #182235 !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+[data-testid="stAppViewContainer"] input::placeholder,
+[data-testid="stAppViewContainer"] textarea::placeholder {
+    color: #cbd5e1 !important;
+    -webkit-text-fill-color: #cbd5e1 !important;
+    opacity: 1 !important;
+}
+
+/* Brand Profile section headings */
+[data-testid="stAppViewContainer"] h1,
+[data-testid="stAppViewContainer"] h2,
+[data-testid="stAppViewContainer"] h3 {
+    color: #ffffff !important;
+}
+
+
+/* Form help text */
+[data-testid="stAppViewContainer"] .stMarkdown p,
+[data-testid="stAppViewContainer"] small {
+    color: #e2e8f0;
+}
+
+/* Top-right menu icon: black */
+[data-testid="stHeader"] button {
+    color: #000000 !important;
+}
+
+[data-testid="stHeader"] button svg {
+    fill: #000000 !important;
+    stroke: #000000 !important;
+}
+
+/* Header background */
+[data-testid="stHeader"] {
+    background-color: #ffffff !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
 st.title("🛡️ ThreatLens AI")
 st.subheader("Digital Risk Protection Platform")
 
